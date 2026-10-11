@@ -1,0 +1,63 @@
+{
+  "name": "SKY 产品开发经理统一包（Codex / Claude Code）",
+  "repository": "https://github.com/tushigan/sky-product-dev-harness",
+  "version": "6.1.2",
+  "released": "2026-10-11",
+  "package_dir": "统一包",
+  "release_zip": {
+    "name": "sky-product-dev-harness-v6.1.2-20261011.zip",
+    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.1.2/sky-product-dev-harness-v6.1.2-20261011.zip",
+    "sha256": "3fbe4e729c833b0d73d440c96b7422d32681f31837f1e2d783067e628dce14aa",
+    "bytes": 284143,
+    "files": 103,
+    "zip_root": "统一包",
+    "note": "与定稿包 产品开发经理-6.1.2-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
+  },
+  "git_tag": "v6.1.2",
+  "requirements": {
+    "python": ">=3.9",
+    "git": "涉及存档仓库的检查需要",
+    "hosts": ["Codex", "Claude Code"],
+    "optional": {
+      "chrome": "设计截图",
+      "pillow": "像素辅助脚本"
+    }
+  },
+  "installed_version_detection": {
+    "file": "版本.json",
+    "field": "版本",
+    "note": "在项目根目录读取；6.1 及更早没有 版本.json，不能按本清单的升级步骤直接升级"
+  },
+  "upgrade_rules": {
+    "from": ["6.1.1"],
+    "never_touch": ["产品需求文档.md", "设计规范.md", "开发计划.md", "设计/", "产品代码"],
+    "backup_first": "项目外完整备份，核对后再继续",
+    "replace": [
+      "维护源/（保留项目原来的 维护源/生成清单.json；改过维护源的先合并）",
+      "工具/维护.py",
+      "工具/提交检查.py",
+      "测试/框架回归.py",
+      "版本.json",
+      "使用说明.md",
+      "说明/（全部文件一起换，或一个都不换）"
+    ],
+    "after": [
+      "python3 工具/维护.py sync",
+      "python3 工具/维护.py check",
+      "python3 测试/框架回归.py（17 项 OK）",
+      "已有 项目交接.md 时按新模板分成“给用户”与“技术附录（给 Agent）”两半，原内容放进技术附录"
+    ]
+  },
+  "history": [
+    {
+      "version": "6.1.2",
+      "date": "2026-10-11",
+      "note": "首个公开版。对用户说话按三段白话；交接三样一起给与模型建议；可选自动接力；项目交接分上下两半；回归增至 17 项，修复已建仓库并装好提交检查的项目回归必然 1 项不过"
+    },
+    {
+      "version": "6.1.1",
+      "date": "2026-10-01",
+      "note": "未公开发布。需求复核先修实现；统一代决授权；增加版本文件与旧框架残留检查；包内 16 项回归"
+    }
+  ]
+}

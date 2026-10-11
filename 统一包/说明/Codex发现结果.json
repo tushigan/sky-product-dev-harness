@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "cwd": "项目根目录",
+      "skills": [
+        {
+          "name": "sky-build",
+          "path": ".agents/skills/sky-build/SKILL.md",
+          "enabled": true
+        },
+        {
+          "name": "sky-design",
+          "path": ".agents/skills/sky-design/SKILL.md",
+          "enabled": true
+        },
+        {
+          "name": "sky-grill",
+          "path": ".agents/skills/sky-grill/SKILL.md",
+          "enabled": true
+        },
+        {
+          "name": "sky-plan",
+          "path": ".agents/skills/sky-plan/SKILL.md",
+          "enabled": true
+        },
+        {
+          "name": "sky-release",
+          "path": ".agents/skills/sky-release/SKILL.md",
+          "enabled": true
+        },
+        {
+          "name": "sky-review",
+          "path": ".agents/skills/sky-review/SKILL.md",
+          "enabled": true
+        }
+      ],
+      "errors": []
+    }
+  ]
+}
