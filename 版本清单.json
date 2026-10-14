@@ -1,23 +1,26 @@
 {
   "name": "SKY 产品开发经理统一包（Codex / Claude Code）",
   "repository": "https://github.com/tushigan/sky-product-dev-harness",
-  "version": "6.1.2",
-  "released": "2026-10-11",
+  "version": "6.1.3",
+  "released": "2026-10-14",
   "package_dir": "统一包",
   "release_zip": {
-    "name": "sky-product-dev-harness-v6.1.2-20261011.zip",
-    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.1.2/sky-product-dev-harness-v6.1.2-20261011.zip",
-    "sha256": "3fbe4e729c833b0d73d440c96b7422d32681f31837f1e2d783067e628dce14aa",
-    "bytes": 284143,
+    "name": "sky-product-dev-harness-v6.1.3-20261014.zip",
+    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.1.3/sky-product-dev-harness-v6.1.3-20261014.zip",
+    "sha256": "0a896836e60462de9662ae2ec7e78df6141e9e2adc5b0ed7cb66daf1bdc4a51a",
+    "bytes": 284164,
     "files": 103,
     "zip_root": "统一包",
-    "note": "与定稿包 产品开发经理-6.1.2-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
+    "note": "与定稿包 产品开发经理-6.1.3-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
   },
-  "git_tag": "v6.1.2",
+  "git_tag": "v6.1.3",
   "requirements": {
     "python": ">=3.9",
     "git": "涉及存档仓库的检查需要",
-    "hosts": ["Codex", "Claude Code"],
+    "hosts": [
+      "Codex",
+      "Claude Code"
+    ],
     "optional": {
       "chrome": "设计截图",
       "pillow": "像素辅助脚本"
@@ -29,8 +32,17 @@
     "note": "在项目根目录读取；6.1 及更早没有 版本.json，不能按本清单的升级步骤直接升级"
   },
   "upgrade_rules": {
-    "from": ["6.1.1"],
-    "never_touch": ["产品需求文档.md", "设计规范.md", "开发计划.md", "设计/", "产品代码"],
+    "from": [
+      "6.1.1",
+      "6.1.2"
+    ],
+    "never_touch": [
+      "产品需求文档.md",
+      "设计规范.md",
+      "开发计划.md",
+      "设计/",
+      "产品代码"
+    ],
     "backup_first": "项目外完整备份，核对后再继续",
     "replace": [
       "维护源/（保留项目原来的 维护源/生成清单.json；改过维护源的先合并）",
@@ -49,6 +61,11 @@
     ]
   },
   "history": [
+    {
+      "version": "6.1.3",
+      "date": "2026-10-14",
+      "note": "只更正 说明/验收结果.md 里过时的一句；规则、技能、帮手、工具与回归均未改"
+    },
     {
       "version": "6.1.2",
       "date": "2026-10-11",
