@@ -58,10 +58,18 @@ class Harness(unittest.TestCase):
   self.assertNotEqual(self.run_cmd('python3','工具/维护.py','check').returncode,0)
  def test_plain_talk_and_handoff_rules(self):
   agents=(self.root/'AGENTS.md').read_text();template=(self.root/'维护源/项目交接模板.md').read_text()
-  for word in ('做了什么','对你有什么影响','要你做什么','PPT','PDF','Word','Excel','AI','HTML','MB','三样一起给','自动接力','技术附录（给 Agent）','用户已确认（2026-10-11）','「xhigh」（比最高少一级）','只用于汇报和总结','已有项目接续时报进度属于进度汇报，按三段','（以当前软件显示为准）','说给用户时先换白话','不必三段','还没上线','派返修','自动接力不代替每个阶段的复核技能'):
+  for word in ('做了什么','对你有什么影响','要你做什么','PPT','PDF','Word','Excel','AI','HTML','MB','三样一起给','自动接力','技术附录（给 Agent）','用户已确认（2026-10-11）','「xhigh」（比最高少一级）','只用于汇报和总结','已有项目接续时报进度属于进度汇报，按三段','（以当前软件显示为准）','说给用户时先换白话','不必三段','还没上线','[开发循环]'):
    with self.subTest(word=word):self.assertIn(word,agents)
   for head in ('## 给用户','## 技术附录（给 Agent）'):
    with self.subTest(head=head):self.assertIn(head,template)
   self.assertLess(template.index('## 给用户'),template.index('## 技术附录（给 Agent）'))
+ def test_dev_loop_rules(self):
+  agents=(self.root/'AGENTS.md').read_text();build=(self.root/'.claude/skills/sky-build/SKILL.md').read_text();review=(self.root/'.claude/skills/sky-review/SKILL.md').read_text()
+  plan=(self.root/'.agents/skills/sky-plan/templates/开发计划.md').read_text();handoff=(self.root/'维护源/项目交接模板.md').read_text()
+  for word in ('[开发循环]','开工前确认','便宜档','聪明档','返修第 3 次（聪明档）','不重置次数','一路做完开发计划里的全部阶段','必须停下来找用户','开发循环不扩大授权','用户 2026-10-19 拍板（原话）','派工/','两边怎么派','照样走 sky-review','“已验证”只在 sky-review 通过后打','每多一轮都要他重新点头','不再派子代理'):
+   with self.subTest(word=word):self.assertIn(word,agents)
+  for text,word in ((build,'[开工前确认开发循环]'),(build,'[派工单怎么写（开发循环开着时）]'),(review,'返修阶梯'),(review,'不另用上面的“三次”'),(build,'派工单开头写明执行子代理的身份'),(plan,'- 开发循环：'),(handoff,'- 开发循环：')):
+   with self.subTest(word=word):self.assertIn(word,text)
+  self.assertLess(agents.index('[开发循环]'),agents.index('[技能]'))
 if __name__=='__main__':unittest.main(verbosity=2)
 

@@ -1,19 +1,19 @@
 {
   "name": "SKY 产品开发经理统一包（Codex / Claude Code）",
   "repository": "https://github.com/tushigan/sky-product-dev-harness",
-  "version": "6.1.3",
-  "released": "2026-10-14",
+  "version": "6.2",
+  "released": "2026-10-19",
   "package_dir": "统一包",
   "release_zip": {
-    "name": "sky-product-dev-harness-v6.1.3-20261014.zip",
-    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.1.3/sky-product-dev-harness-v6.1.3-20261014.zip",
-    "sha256": "0a896836e60462de9662ae2ec7e78df6141e9e2adc5b0ed7cb66daf1bdc4a51a",
-    "bytes": 284164,
+    "name": "sky-product-dev-harness-v6.2-20261019.zip",
+    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.2/sky-product-dev-harness-v6.2-20261019.zip",
+    "sha256": "e286d2ff93c203337121a00a11e86b808db24235654fb958809a167082a56f30",
+    "bytes": 296782,
     "files": 103,
     "zip_root": "统一包",
-    "note": "与定稿包 产品开发经理-6.1.3-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
+    "note": "与定稿包 产品开发经理-6.2-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
   },
-  "git_tag": "v6.1.3",
+  "git_tag": "v6.2",
   "requirements": {
     "python": ">=3.9",
     "git": "涉及存档仓库的检查需要",
@@ -34,13 +34,15 @@
   "upgrade_rules": {
     "from": [
       "6.1.1",
-      "6.1.2"
+      "6.1.2",
+      "6.1.3"
     ],
     "never_touch": [
       "产品需求文档.md",
       "设计规范.md",
       "开发计划.md",
       "设计/",
+      "派工/",
       "产品代码"
     ],
     "backup_first": "项目外完整备份，核对后再继续",
@@ -56,11 +58,16 @@
     "after": [
       "python3 工具/维护.py sync",
       "python3 工具/维护.py check",
-      "python3 测试/框架回归.py（17 项 OK）",
-      "已有 项目交接.md 时按新模板分成“给用户”与“技术附录（给 Agent）”两半，原内容放进技术附录"
+      "python3 测试/框架回归.py（18 项 OK）",
+      "已有 项目交接.md 时按新模板补齐“给用户”与“技术附录（给 Agent）”两半，原内容放进技术附录；技术附录加“开发循环：未确认，下次开发时会问用户”，旧版“已获准自动接力”不沿用"
     ]
   },
   "history": [
+    {
+      "version": "6.2",
+      "date": "2026-10-19",
+      "note": "新增开发循环：开工前问用户开不开并建议便宜档/聪明档（模型 + 思考深度，用户可自改）；主 Agent 只规划和审核，代码派执行子代理写；返修阶梯为便宜档首次 + 返修两次、第 3 次换聪明档、再不过停下问用户；阶段过了自动做下一阶段直到全部完成；回归增至 18 项"
+    },
     {
       "version": "6.1.3",
       "date": "2026-10-14",
@@ -76,5 +83,6 @@
       "date": "2026-10-01",
       "note": "未公开发布。需求复核先修实现；统一代决授权；增加版本文件与旧框架残留检查；包内 16 项回归"
     }
-  ]
+  ],
+  "install_update_guide": "给Agent的安装更新提示词.md"
 }
