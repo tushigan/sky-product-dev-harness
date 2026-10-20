@@ -71,5 +71,40 @@ class Harness(unittest.TestCase):
   for text,word in ((build,'[开工前确认开发循环]'),(build,'[派工单怎么写（开发循环开着时）]'),(review,'返修阶梯'),(review,'不另用上面的“三次”'),(build,'派工单开头写明执行子代理的身份'),(plan,'- 开发循环：'),(handoff,'- 开发循环：')):
    with self.subTest(word=word):self.assertIn(word,text)
   self.assertLess(agents.index('[开发循环]'),agents.index('[技能]'))
+ def test_three_gates_rules(self):
+  agents=(self.root/'AGENTS.md').read_text();build=(self.root/'.claude/skills/sky-build/SKILL.md').read_text();grill=(self.root/'.agents/skills/sky-grill/SKILL.md').read_text()
+  plan=(self.root/'.claude/skills/sky-plan/templates/开发计划.md').read_text();handoff=(self.root/'维护源/项目交接模板.md').read_text()
+  for word in ('[动手改产品之前 · 三道门]','不分大小、不分有没有界面','都算进入开发，不是可以跳过流程的捷径','管你的始终是本文件','不得自己填“未涉及”“不适用”','直接要改产品文件','做完手上这一步（一处修改、一条正在跑的命令）就停','还没照办的停下指示','--流程'):
+   with self.subTest(word=word):self.assertIn(word,agents)
+  for text,word in ((build,'也含只改几行规则或文字的小改'),(build,'三道门'),(grill,'按某份资料或经验优化升级产品'),(plan,'Agent 不自己填'),(handoff,'不自己填豁免')):
+   with self.subTest(word=word):self.assertIn(word,text)
+  self.assertLess(agents.index('[动手改产品之前 · 三道门]'),agents.index('[角色]'))
+ def test_flow_reminder_does_not_block(self):
+  self.stage('产品/规则.md','改了');r=self.check();self.assertEqual(r.returncode,0);self.assertIn('三道门',r.stderr)
+  (self.root/'产品需求文档.md').write_text('需求');(self.root/'开发计划.md').write_text('- 开发循环：未涉及（规则修订）\n')
+  r=self.check();self.assertEqual(r.returncode,0);self.assertIn('豁免',r.stderr)
+  (self.root/'开发计划.md').write_text('- 开发循环：暂不开，用户 2026-10-20 说以后再定\n')
+  r=self.check();self.assertEqual(r.returncode,0);self.assertNotIn('三道门',r.stderr)
+  self.run_cmd('git','reset','-q');self.stage('开发计划.md','- 开发循环：\n');r=self.check();self.assertNotIn('三道门',r.stderr)
+ def test_flow_self_check_without_git(self):
+  shutil.rmtree(self.root/'.git');r=self.run_cmd('python3','工具/提交检查.py','--流程');self.assertEqual(r.returncode,1);self.assertIn('第三道门',r.stdout)
+  (self.root/'产品需求文档.md').write_text('需求');(self.root/'开发计划.md').write_text('- 开发循环：{{开工前问用户后填}}\n')
+  r=self.run_cmd('python3','工具/提交检查.py','--流程');self.assertEqual(r.returncode,1);self.assertIn('还没填',r.stdout)
+  (self.root/'开发计划.md').write_text('- 开发循环：开，便宜档「甲」中到高、聪明档「乙」高，用户 2026-10-20 原话“按你建议”\n')
+  self.assertEqual(self.run_cmd('python3','工具/提交检查.py','--流程').returncode,0)
+ def test_flow_reminder_cases(self):
+  self.stage('维护源/技能/sky-build/SKILL.md','框架维护');self.stage('说明/记录.md','记录');self.stage('探路/试做.py','x=1')
+  r=self.check();self.assertEqual(r.returncode,0);self.assertNotIn('三道门',r.stderr)
+  (self.root/'产品需求文档.md').write_text('需求');self.stage('产品/规则.md','改了')
+  for value,warn in (('未涉及（用户说三批都改，只是改规则）',True),('不适用，用户要求直接改',True),('Agent 判断：规则修订，免问',True),
+                     ('开，便宜档「gpt-5-nano」中、聪明档「Banana」高，用户 2026-10-20 原话“按你建议”',False),('不开，2026-10-20 原话“不需要”',False),
+                     ('宿主派不了子代理，开不了（2026-10-20，已告诉用户）',False)):
+   for line in ('- 开发循环：'+value,'* 开发循环: '+value):
+    with self.subTest(line=line):
+     (self.root/'开发计划.md').write_text(line+'\n');r=self.check();self.assertEqual(r.returncode,0);self.assertEqual('三道门' in r.stderr,warn)
+  (self.root/'项目交接.md').write_text('- 开发循环：未涉及（规则修订，主 Agent 直接改）\n');r=self.check();self.assertIn('项目交接',r.stderr)
+  self.run_cmd('git','reset','-q');self.stage('产品/旧.md','x');self.run_cmd('git','commit','-qm','fixture');self.run_cmd('git','rm','-q','产品/旧.md')
+  r=self.check();self.assertEqual(r.returncode,0);self.assertIn('项目交接',r.stderr)
+  other=Path(self.tmp.name);r=subprocess.run(['python3',str(self.root/'工具/提交检查.py'),'--流程'],cwd=other,capture_output=True,text=True);self.assertEqual(r.returncode,1);self.assertIn('项目交接',r.stdout)
 if __name__=='__main__':unittest.main(verbosity=2)
 

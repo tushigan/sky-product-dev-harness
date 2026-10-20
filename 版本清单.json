@@ -1,19 +1,19 @@
 {
   "name": "SKY 产品开发经理统一包（Codex / Claude Code）",
   "repository": "https://github.com/tushigan/sky-product-dev-harness",
-  "version": "6.2",
-  "released": "2026-10-19",
+  "version": "6.3",
+  "released": "2026-10-20",
   "package_dir": "统一包",
   "release_zip": {
-    "name": "sky-product-dev-harness-v6.2-20261019.zip",
-    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.2/sky-product-dev-harness-v6.2-20261019.zip",
-    "sha256": "e286d2ff93c203337121a00a11e86b808db24235654fb958809a167082a56f30",
-    "bytes": 296782,
+    "name": "sky-product-dev-harness-v6.3-20261020.zip",
+    "url": "https://github.com/tushigan/sky-product-dev-harness/releases/download/v6.3/sky-product-dev-harness-v6.3-20261020.zip",
+    "sha256": "064cd3445501b8315de238bd5ebccb7c579a841aec23d4be509307f78e323f81",
+    "bytes": 298246,
     "files": 103,
     "zip_root": "统一包",
-    "note": "与定稿包 产品开发经理-6.2-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
+    "note": "与定稿包 产品开发经理-6.3-统一包.zip 逐字节相同，仅附件名改为英文（GitHub 会改写中文附件名）"
   },
-  "git_tag": "v6.2",
+  "git_tag": "v6.3",
   "requirements": {
     "python": ">=3.9",
     "git": "涉及存档仓库的检查需要",
@@ -35,7 +35,8 @@
     "from": [
       "6.1.1",
       "6.1.2",
-      "6.1.3"
+      "6.1.3",
+      "6.2"
     ],
     "never_touch": [
       "产品需求文档.md",
@@ -58,11 +59,16 @@
     "after": [
       "python3 工具/维护.py sync",
       "python3 工具/维护.py check",
-      "python3 测试/框架回归.py（18 项 OK）",
+      "python3 测试/框架回归.py（22 项 OK）",
       "已有 项目交接.md 时按新模板补齐“给用户”与“技术附录（给 Agent）”两半，原内容放进技术附录；技术附录加“开发循环：未确认，下次开发时会问用户”，旧版“已获准自动接力”不沿用"
     ]
   },
   "history": [
+    {
+      "version": "6.3",
+      "date": "2026-10-20",
+      "note": "新增“动手改产品之前 · 三道门”：不分大小、不分有没有界面，改产品文件前先确认需求清单有行、开发计划有阶段和验收条件、问过用户开发循环；用户说“改/都改/全做”或批准改动清单都算进入开发；“开发循环”一行只记用户回答，Agent 不得自填“未涉及/不适用”；用户叫停做完手上一步就停；提交检查在改到产品文件而三道门有缺口时只提醒不阻止，加 --流程 可无 Git 自查；回归增至 22 项"
+    },
     {
       "version": "6.2",
       "date": "2026-10-19",
