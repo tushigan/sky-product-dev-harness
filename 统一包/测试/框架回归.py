@@ -4,6 +4,7 @@ SOURCE=Path(__file__).resolve().parents[1]
 class Harness(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory(prefix='统一包 空格 '); self.root=Path(self.tmp.name)/'项目';shutil.copytree(SOURCE,self.root,ignore=shutil.ignore_patterns('.git'))
+  for name in ('产品需求文档.md','开发计划.md','项目交接.md'):(self.root/name).unlink(missing_ok=True)
   self.run_cmd('git','init','-q');self.run_cmd('git','config','user.email','test@example.invalid');self.run_cmd('git','config','user.name','Fixture');self.run_cmd('git','config','commit.gpgsign','false')
  def tearDown(self):self.tmp.cleanup()
  def run_cmd(self,*cmd):return subprocess.run(cmd,cwd=self.root,capture_output=True,text=True)
